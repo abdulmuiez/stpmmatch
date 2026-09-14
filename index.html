@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>STPMMatch v1.9 — Semakan Kelayakan & Merit UPU</title>
+  <title>STPMMatch v1.11 — Semakan Kelayakan & Merit UPU</title>
   <meta name="description" content="STPMMatch membantu lepasan STPM menyemak kelayakan asas UPU, mengira merit dan meneroka laluan berdasarkan kombinasi subjek STPM." />
   <style>
     :root{
@@ -60,7 +60,7 @@
     .route-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:16px}.route{border:1px solid var(--line);border-radius:16px;padding:16px;background:white}.route h4{margin:0 0 7px}.route p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
     .subject-chips{display:flex;flex-wrap:wrap;gap:9px}.chip{position:relative}.chip input{position:absolute;opacity:0;pointer-events:none}.chip label{margin:0;border:1px solid var(--line);background:white;color:#405069;padding:9px 12px;border-radius:999px;cursor:pointer;font-weight:700}.chip input:checked+label{background:#e7f2ff;border-color:#8ab1dd;color:#123f71}
     .notice{font-size:13px;line-height:1.55;padding:14px 16px;border-radius:14px;background:#f1f5f9;color:#59677b;margin-top:14px}
-    .program-list{display:grid;gap:12px;margin-top:16px}.program-card{background:white;border:1px solid var(--line);border-radius:16px;padding:17px}.program-card h4{margin:0 0 4px;font-size:16px}.program-meta{color:var(--muted);font-size:12px;line-height:1.5}.merit-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.merit-badge{font-size:12px;font-weight:800;padding:7px 10px;border-radius:999px;background:#edf3f9}.audit{font-size:11px;color:var(--warn);margin-top:8px}.status-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.status-box{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.17);border-radius:16px;padding:14px 16px}.status-box b{display:block;font-size:20px}.status-box span{font-size:12px;color:#dbe8f6}.disclaimer-card{margin-top:18px;background:#fffaf0;border:1px solid #eed3a5;border-radius:18px;padding:18px 20px;color:#655330;line-height:1.6}.disclaimer-card strong{color:#5a451b}.release-note{margin-top:12px;padding:12px 14px;border-radius:14px;background:#f4f8fc;border:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.55}footer{margin-top:34px;text-align:center;color:var(--muted);font-size:12px;line-height:1.6}
+    .program-list{display:grid;gap:12px;margin-top:16px}.program-card{background:white;border:1px solid var(--line);border-radius:16px;padding:17px}.program-card h4{margin:0 0 4px;font-size:16px}.program-meta{color:var(--muted);font-size:12px;line-height:1.5}.merit-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.merit-badge{font-size:12px;font-weight:800;padding:7px 10px;border-radius:999px;background:#edf3f9}.audit{font-size:11px;color:var(--warn);margin-top:8px}.status-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.status-box{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.17);border-radius:16px;padding:14px 16px}.status-box b{display:block;font-size:20px}.status-box span{font-size:12px;color:#dbe8f6}.disclaimer-card{margin-top:18px;background:#fffaf0;border:1px solid #eed3a5;border-radius:18px;padding:18px 20px;color:#655330;line-height:1.6}.disclaimer-card strong{color:#5a451b}.release-note{margin-top:12px;padding:12px 14px;border-radius:14px;background:#f4f8fc;border:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.55}footer{margin-top:34px;text-align:center;color:var(--muted);font-size:12px;line-height:1.6}
     footer a{color:var(--primary)}
     @media(max-width:760px){header{padding:14px 16px;gap:14px;border-radius:0 0 18px 18px}.logo{width:72px;height:72px;flex-basis:72px;border-radius:14px}.brand small{font-size:11px}.brand strong{font-size:17px}.mode-grid,.grid,.grid3,.route-grid,.status-strip{grid-template-columns:1fr}.hero{padding:28px 22px}.panel-head,.panel-body{padding:20px}.subject-row{grid-template-columns:1fr 110px}.subject-row button{grid-column:1/-1}.stats{grid-template-columns:1fr}.wrap{padding:18px 14px 42px}}
   
@@ -127,10 +127,10 @@
     </header>
 
     <section class="hero">
-      <span class="pill">STPM → UPU • v1.7</span>
+      <span class="pill">STPM → UPU • v1.11</span>
       <h1>STPMMatch</h1>
       <p>Semak kelayakan program, kira merit UPU dan teroka hala tuju berdasarkan kombinasi mata pelajaran STPM anda.</p>
-      <div class="status-strip"><div class="status-box"><b>301</b><span>program semakan</span></div><div class="status-box"><b>9</b><span>program audit tertangguh</span></div><div class="status-box"><b>A / S</b><span>merit dipisahkan ikut kategori</span></div></div>
+      <div class="status-strip"><div class="status-box"><b>309</b><span>program semakan</span></div><div class="status-box"><b>A / S</b><span>merit dipisahkan ikut kategori</span></div></div>
     </section>
 
     <div class="disclaimer-card"><strong>Penting:</strong> STPMMatch ialah alat semakan dan penerokaan yang dibangunkan oleh Unit Bimbingan dan Kaunseling SMK Sungai Besar. Ia bukan portal rasmi UPU. Syarat, merit, temu duga, ujian dan kekosongan program boleh berubah mengikut sesi. Semakan akhir hendaklah dibuat melalui UPUOnline dan e-Panduan rasmi.</div>
@@ -150,7 +150,7 @@
     </section>
 
     <section id="checkPanel" class="panel">
-      <div class="panel-head"><div><h2>Semak Kelayakan Saya</h2><p>Sistem menapis syarat am, syarat khas program, MUET dan kombinasi subjek sebelum memaparkan program yang layak sahaja.</p><div class="release-note">301 program boleh ditapis. 63 rekod masih menggunakan syarat sesi terdahulu dan ditanda untuk semakan silang dengan e-Panduan semasa. 9 program UniMAP masih audit tertangguh dan tidak dipaparkan.</div></div><button class="close" onclick="closePanels()">Tutup</button></div>
+      <div class="panel-head"><div><h2>Semak Kelayakan Saya</h2><p>Sistem menapis syarat am, syarat khas program, MUET dan kombinasi subjek sebelum memaparkan program yang layak sahaja.</p><div class="release-note">309 program boleh ditapis. Semakan akhir syarat dan merit hendaklah dibuat melalui e-Panduan UPUOnline semasa.</div></div><button class="close" onclick="closePanels()">Tutup</button></div>
       <div class="panel-body">
         <div class="step">
           <h3>1. Keputusan STPM</h3>
@@ -9981,18 +9981,61 @@ const PROGRAMS = [
     "category": [
       "S"
     ],
-    "meritAverage": null,
+    "meritAverage": 89.94,
     "interview": false,
     "test": false,
-    "auditStatus": "in_audit",
-    "ruleSession": "UniMAP portal rasmi 2026 — rules STPM sedang diaudit",
-    "meritSession": "Belum dimasukkan",
-    "sourceLabel": "Program: UniMAP rasmi 2026 · Syarat STPM: dalam audit",
-    "notes": "Program disahkan wujud pada portal rasmi UniMAP 2026. Tidak dipaparkan dalam keputusan kelayakan sehingga syarat STPM terperinci disahkan.",
+    "auditStatus": "verified_current_program_official_stpm_rule",
+    "ruleSession": "UniMAP rasmi STPM 2023/2024; program aktif pada portal UniMAP 2026",
+    "meritSession": "e-Panduan UPUOnline 2026/2027 (rekod mirror MyUPU) · Kategori S",
+    "sourceLabel": "Program aktif: portal rasmi UniMAP 2026 · Syarat STPM: dokumen rasmi UniMAP · Merit: e-Panduan UPUOnline 2026/2027 apabila tersedia",
+    "notes": "Syarat STPM: Matematik T sekurang-kurangnya Gred C dan satu daripada Fizik/Kimia/Biologi sekurang-kurangnya Gred C; jika menggunakan Kimia atau Biologi, Fizik SPM perlu sekurang-kurangnya lulus Gred E; MUET sekurang-kurangnya Band 2. Syarat kesihatan/keupayaan kerja amali yang dinyatakan UniMAP perlu disemak secara manual. Merit Kategori S rujukan e-Panduan 2026/2027: 89.94%.",
     "code": "UR6540001",
     "name": "Sarjana Muda Kejuruteraan Pembuatan dengan Kepujian",
     "field": "Kejuruteraan Pembuatan",
-    "rules": {}
+    "rules": {
+      "minMUET": 2,
+      "stpmAll": [
+        {
+          "type": "grade",
+          "subject": "Mathematics (T)",
+          "minPoint": 2.0
+        }
+      ],
+      "pathAlternatives": [
+        {
+          "stpmAll": [
+            {
+              "type": "grade",
+              "subject": "Physics",
+              "minPoint": 2.0
+            }
+          ]
+        },
+        {
+          "stpmAll": [
+            {
+              "type": "oneOf",
+              "subjects": [
+                "Chemistry",
+                "Biology"
+              ],
+              "minPoint": 2.0
+            }
+          ],
+          "spmAll": [
+            {
+              "type": "grade",
+              "subject": "Fizik",
+              "minRank": 2
+            }
+          ]
+        }
+      ]
+    },
+    "meritByCategory": {
+      "S": 89.94
+    },
+    "meritAudit": "Merit dirujuk daripada rekod e-Panduan UPUOnline 2026/2027 melalui MyUPU; semakan rasmi akhir melalui e-Panduan UPUOnline."
   },
   {
     "university": "Universiti Malaysia Perlis (UniMAP)",
@@ -10000,18 +10043,61 @@ const PROGRAMS = [
     "category": [
       "S"
     ],
-    "meritAverage": null,
+    "meritAverage": 86.95,
     "interview": false,
     "test": false,
-    "auditStatus": "in_audit",
-    "ruleSession": "UniMAP portal rasmi 2026 — rules STPM sedang diaudit",
-    "meritSession": "Belum dimasukkan",
-    "sourceLabel": "Program: UniMAP rasmi 2026 · Syarat STPM: dalam audit",
-    "notes": "Program disahkan wujud pada portal rasmi UniMAP 2026. Tidak dipaparkan dalam keputusan kelayakan sehingga syarat STPM terperinci disahkan.",
+    "auditStatus": "verified_current_program_official_stpm_rule",
+    "ruleSession": "UniMAP rasmi STPM 2024/2025; program aktif pada portal UniMAP 2026",
+    "meritSession": "e-Panduan UPUOnline 2026/2027 (rekod mirror MyUPU) · Kategori S",
+    "sourceLabel": "Program aktif: portal rasmi UniMAP 2026 · Syarat STPM: dokumen rasmi UniMAP · Merit: e-Panduan UPUOnline 2026/2027 apabila tersedia",
+    "notes": "Syarat STPM: Matematik T sekurang-kurangnya Gred C dan satu daripada Fizik/Kimia/Biologi sekurang-kurangnya Gred C; jika menggunakan Kimia atau Biologi, Fizik SPM perlu sekurang-kurangnya lulus Gred E; MUET sekurang-kurangnya Band 2. Syarat kesihatan/keupayaan kerja amali yang dinyatakan UniMAP perlu disemak secara manual. Merit Kategori S rujukan e-Panduan 2026/2027: 86.95%.",
     "code": "UR6521002",
     "name": "Sarjana Muda Teknologi Kejuruteraan Mekanikal (Pemesinan) dengan Kepujian",
     "field": "Teknologi Kejuruteraan Mekanikal",
-    "rules": {}
+    "rules": {
+      "minMUET": 2,
+      "stpmAll": [
+        {
+          "type": "grade",
+          "subject": "Mathematics (T)",
+          "minPoint": 2.0
+        }
+      ],
+      "pathAlternatives": [
+        {
+          "stpmAll": [
+            {
+              "type": "grade",
+              "subject": "Physics",
+              "minPoint": 2.0
+            }
+          ]
+        },
+        {
+          "stpmAll": [
+            {
+              "type": "oneOf",
+              "subjects": [
+                "Chemistry",
+                "Biology"
+              ],
+              "minPoint": 2.0
+            }
+          ],
+          "spmAll": [
+            {
+              "type": "grade",
+              "subject": "Fizik",
+              "minRank": 2
+            }
+          ]
+        }
+      ]
+    },
+    "meritByCategory": {
+      "S": 86.95
+    },
+    "meritAudit": "Merit dirujuk daripada rekod e-Panduan UPUOnline 2026/2027 melalui MyUPU; semakan rasmi akhir melalui e-Panduan UPUOnline."
   },
   {
     "university": "Universiti Malaysia Perlis (UniMAP)",
@@ -10019,18 +10105,61 @@ const PROGRAMS = [
     "category": [
       "S"
     ],
-    "meritAverage": null,
+    "meritAverage": 86.52,
     "interview": false,
     "test": false,
-    "auditStatus": "in_audit",
-    "ruleSession": "UniMAP portal rasmi 2026 — rules STPM sedang diaudit",
-    "meritSession": "Belum dimasukkan",
-    "sourceLabel": "Program: UniMAP rasmi 2026 · Syarat STPM: dalam audit",
-    "notes": "Program disahkan wujud pada portal rasmi UniMAP 2026. Tidak dipaparkan dalam keputusan kelayakan sehingga syarat STPM terperinci disahkan.",
+    "auditStatus": "verified_current_program_official_stpm_rule",
+    "ruleSession": "UniMAP rasmi STPM 2024/2025; program aktif pada portal UniMAP 2026",
+    "meritSession": "e-Panduan UPUOnline 2026/2027 (rekod mirror MyUPU) · Kategori S",
+    "sourceLabel": "Program aktif: portal rasmi UniMAP 2026 · Syarat STPM: dokumen rasmi UniMAP · Merit: e-Panduan UPUOnline 2026/2027 apabila tersedia",
+    "notes": "Syarat STPM: Matematik T sekurang-kurangnya Gred C dan satu daripada Fizik/Kimia/Biologi sekurang-kurangnya Gred C; jika menggunakan Kimia atau Biologi, Fizik SPM perlu sekurang-kurangnya lulus Gred E; MUET sekurang-kurangnya Band 2. Syarat kesihatan/keupayaan kerja amali yang dinyatakan UniMAP perlu disemak secara manual. Merit Kategori S rujukan e-Panduan 2026/2027: 86.52%.",
     "code": "UR6521003",
     "name": "Sarjana Muda Teknologi Kejuruteraan Mekanikal (Sistem Pertanian) dengan Kepujian",
     "field": "Teknologi Kejuruteraan Pertanian",
-    "rules": {}
+    "rules": {
+      "minMUET": 2,
+      "stpmAll": [
+        {
+          "type": "grade",
+          "subject": "Mathematics (T)",
+          "minPoint": 2.0
+        }
+      ],
+      "pathAlternatives": [
+        {
+          "stpmAll": [
+            {
+              "type": "grade",
+              "subject": "Physics",
+              "minPoint": 2.0
+            }
+          ]
+        },
+        {
+          "stpmAll": [
+            {
+              "type": "oneOf",
+              "subjects": [
+                "Chemistry",
+                "Biology"
+              ],
+              "minPoint": 2.0
+            }
+          ],
+          "spmAll": [
+            {
+              "type": "grade",
+              "subject": "Fizik",
+              "minRank": 2
+            }
+          ]
+        }
+      ]
+    },
+    "meritByCategory": {
+      "S": 86.52
+    },
+    "meritAudit": "Merit dirujuk daripada rekod e-Panduan UPUOnline 2026/2027 melalui MyUPU; semakan rasmi akhir melalui e-Panduan UPUOnline."
   },
   {
     "university": "Universiti Malaysia Perlis (UniMAP)",
@@ -10038,18 +10167,61 @@ const PROGRAMS = [
     "category": [
       "S"
     ],
-    "meritAverage": null,
+    "meritAverage": 85.33,
     "interview": false,
     "test": false,
-    "auditStatus": "in_audit",
-    "ruleSession": "UniMAP portal rasmi 2026 — rules STPM sedang diaudit",
-    "meritSession": "Belum dimasukkan",
-    "sourceLabel": "Program: UniMAP rasmi 2026 · Syarat STPM: dalam audit",
-    "notes": "Program disahkan wujud pada portal rasmi UniMAP 2026. Tidak dipaparkan dalam keputusan kelayakan sehingga syarat STPM terperinci disahkan.",
+    "auditStatus": "verified_current_program_official_stpm_rule",
+    "ruleSession": "UniMAP rasmi STPM 2024/2025; program aktif pada portal UniMAP 2026",
+    "meritSession": "e-Panduan UPUOnline 2026/2027 (rekod mirror MyUPU) · Kategori S",
+    "sourceLabel": "Program aktif: portal rasmi UniMAP 2026 · Syarat STPM: dokumen rasmi UniMAP · Merit: e-Panduan UPUOnline 2026/2027 apabila tersedia",
+    "notes": "Syarat STPM: Matematik T sekurang-kurangnya Gred C dan satu daripada Fizik/Kimia/Biologi sekurang-kurangnya Gred C; jika menggunakan Kimia atau Biologi, Fizik SPM perlu sekurang-kurangnya lulus Gred E; MUET sekurang-kurangnya Band 2. Syarat kesihatan/keupayaan kerja amali yang dinyatakan UniMAP perlu disemak secara manual. Merit Kategori S rujukan e-Panduan 2026/2027: 85.33%.",
     "code": "UR6521004",
     "name": "Sarjana Muda Teknologi Kejuruteraan Mekanikal (Reka Bentuk Produk) dengan Kepujian",
     "field": "Reka Bentuk Produk",
-    "rules": {}
+    "rules": {
+      "minMUET": 2,
+      "stpmAll": [
+        {
+          "type": "grade",
+          "subject": "Mathematics (T)",
+          "minPoint": 2.0
+        }
+      ],
+      "pathAlternatives": [
+        {
+          "stpmAll": [
+            {
+              "type": "grade",
+              "subject": "Physics",
+              "minPoint": 2.0
+            }
+          ]
+        },
+        {
+          "stpmAll": [
+            {
+              "type": "oneOf",
+              "subjects": [
+                "Chemistry",
+                "Biology"
+              ],
+              "minPoint": 2.0
+            }
+          ],
+          "spmAll": [
+            {
+              "type": "grade",
+              "subject": "Fizik",
+              "minRank": 2
+            }
+          ]
+        }
+      ]
+    },
+    "meritByCategory": {
+      "S": 85.33
+    },
+    "meritAudit": "Merit dirujuk daripada rekod e-Panduan UPUOnline 2026/2027 melalui MyUPU; semakan rasmi akhir melalui e-Panduan UPUOnline."
   },
   {
     "university": "Universiti Malaysia Perlis (UniMAP)",
@@ -10057,18 +10229,61 @@ const PROGRAMS = [
     "category": [
       "S"
     ],
-    "meritAverage": null,
+    "meritAverage": 86.47,
     "interview": false,
     "test": false,
-    "auditStatus": "in_audit",
-    "ruleSession": "UniMAP portal rasmi 2026 — rules STPM sedang diaudit",
-    "meritSession": "Belum dimasukkan",
-    "sourceLabel": "Program: UniMAP rasmi 2026 · Syarat STPM: dalam audit",
-    "notes": "Program disahkan wujud pada portal rasmi UniMAP 2026. Tidak dipaparkan dalam keputusan kelayakan sehingga syarat STPM terperinci disahkan.",
+    "auditStatus": "verified_current_program_official_stpm_rule",
+    "ruleSession": "UniMAP rasmi STPM 2024/2025; program aktif pada portal UniMAP 2026",
+    "meritSession": "e-Panduan UPUOnline 2026/2027 (rekod mirror MyUPU) · Kategori S",
+    "sourceLabel": "Program aktif: portal rasmi UniMAP 2026 · Syarat STPM: dokumen rasmi UniMAP · Merit: e-Panduan UPUOnline 2026/2027 apabila tersedia",
+    "notes": "Syarat STPM: Matematik T sekurang-kurangnya Gred C dan satu daripada Fizik/Kimia/Biologi sekurang-kurangnya Gred C; jika menggunakan Kimia atau Biologi, Fizik SPM perlu sekurang-kurangnya lulus Gred E; MUET sekurang-kurangnya Band 2. Syarat kesihatan/keupayaan kerja amali yang dinyatakan UniMAP perlu disemak secara manual. Merit Kategori S rujukan e-Panduan 2026/2027: 86.47%.",
     "code": "UR6543001",
     "name": "Sarjana Muda Teknologi Kejuruteraan Mekanikal (Pemprosesan Bahan) dengan Kepujian",
     "field": "Teknologi Bahan",
-    "rules": {}
+    "rules": {
+      "minMUET": 2,
+      "stpmAll": [
+        {
+          "type": "grade",
+          "subject": "Mathematics (T)",
+          "minPoint": 2.0
+        }
+      ],
+      "pathAlternatives": [
+        {
+          "stpmAll": [
+            {
+              "type": "grade",
+              "subject": "Physics",
+              "minPoint": 2.0
+            }
+          ]
+        },
+        {
+          "stpmAll": [
+            {
+              "type": "oneOf",
+              "subjects": [
+                "Chemistry",
+                "Biology"
+              ],
+              "minPoint": 2.0
+            }
+          ],
+          "spmAll": [
+            {
+              "type": "grade",
+              "subject": "Fizik",
+              "minRank": 2
+            }
+          ]
+        }
+      ]
+    },
+    "meritByCategory": {
+      "S": 86.47
+    },
+    "meritAudit": "Merit dirujuk daripada rekod e-Panduan UPUOnline 2026/2027 melalui MyUPU; semakan rasmi akhir melalui e-Panduan UPUOnline."
   },
   {
     "university": "Universiti Malaysia Perlis (UniMAP)",
@@ -10079,15 +10294,54 @@ const PROGRAMS = [
     "meritAverage": null,
     "interview": false,
     "test": false,
-    "auditStatus": "in_audit",
-    "ruleSession": "UniMAP portal rasmi 2026 — rules STPM sedang diaudit",
-    "meritSession": "Belum dimasukkan",
-    "sourceLabel": "Program: UniMAP rasmi 2026 · Syarat STPM: dalam audit",
-    "notes": "Program disahkan wujud pada portal rasmi UniMAP 2026. Tidak dipaparkan dalam keputusan kelayakan sehingga syarat STPM terperinci disahkan.",
+    "auditStatus": "verified_current_program_official_stpm_rule",
+    "ruleSession": "UniMAP rasmi STPM 2023/2024; program aktif pada portal UniMAP 2026",
+    "meritSession": "Merit Kategori S belum tersedia dalam rekod rujukan yang ditemui",
+    "sourceLabel": "Program aktif: portal rasmi UniMAP 2026 · Syarat STPM: dokumen rasmi UniMAP · Merit: e-Panduan UPUOnline 2026/2027 apabila tersedia",
+    "notes": "Syarat STPM: Matematik T sekurang-kurangnya Gred C dan satu daripada Fizik/Kimia/Biologi sekurang-kurangnya Gred C; jika menggunakan Kimia atau Biologi, Fizik SPM perlu sekurang-kurangnya lulus Gred E; MUET sekurang-kurangnya Band 2. Syarat kesihatan/keupayaan kerja amali yang dinyatakan UniMAP perlu disemak secara manual. Purata merit belum ditemui; kelayakan akademik masih boleh ditapis.",
     "code": "UR6524003",
     "name": "Sarjana Muda Kejuruteraan Pertanian dengan Kepujian",
     "field": "Kejuruteraan Pertanian",
-    "rules": {}
+    "rules": {
+      "minMUET": 2,
+      "stpmAll": [
+        {
+          "type": "grade",
+          "subject": "Mathematics (T)",
+          "minPoint": 2.0
+        }
+      ],
+      "pathAlternatives": [
+        {
+          "stpmAll": [
+            {
+              "type": "grade",
+              "subject": "Physics",
+              "minPoint": 2.0
+            }
+          ]
+        },
+        {
+          "stpmAll": [
+            {
+              "type": "oneOf",
+              "subjects": [
+                "Chemistry",
+                "Biology"
+              ],
+              "minPoint": 2.0
+            }
+          ],
+          "spmAll": [
+            {
+              "type": "grade",
+              "subject": "Fizik",
+              "minRank": 2
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "university": "Universiti Malaysia Perlis (UniMAP)",
@@ -10155,18 +10409,61 @@ const PROGRAMS = [
     "category": [
       "S"
     ],
-    "meritAverage": null,
+    "meritAverage": 93.0,
     "interview": false,
     "test": false,
-    "auditStatus": "in_audit",
-    "ruleSession": "UniMAP portal rasmi 2026 — rules STPM sedang diaudit",
-    "meritSession": "Belum dimasukkan",
-    "sourceLabel": "Program: UniMAP rasmi 2026 · Syarat STPM: dalam audit",
-    "notes": "Program disahkan wujud pada portal rasmi UniMAP 2026. Tidak dipaparkan dalam keputusan kelayakan sehingga syarat STPM terperinci disahkan.",
+    "auditStatus": "verified_current_program_official_stpm_rule",
+    "ruleSession": "UniMAP rasmi STPM 2024/2025; program aktif pada portal UniMAP 2026",
+    "meritSession": "e-Panduan UPUOnline 2026/2027 (rekod mirror MyUPU) · Kategori S",
+    "sourceLabel": "Program aktif: portal rasmi UniMAP 2026 · Syarat STPM: dokumen rasmi UniMAP · Merit: e-Panduan UPUOnline 2026/2027 apabila tersedia",
+    "notes": "Syarat STPM: Matematik T sekurang-kurangnya Gred C dan satu daripada Fizik/Kimia/Biologi sekurang-kurangnya Gred C; jika menggunakan Kimia atau Biologi, Fizik SPM perlu sekurang-kurangnya lulus Gred E; MUET sekurang-kurangnya Band 2. Syarat kesihatan/keupayaan kerja amali yang dinyatakan UniMAP perlu disemak secara manual. Merit Kategori S rujukan e-Panduan 2026/2027: 93.00%.",
     "code": "UR6522002",
     "name": "Sarjana Muda Teknologi Kejuruteraan Elektrik (Kuasa Industri) dengan Kepujian",
     "field": "Teknologi Kejuruteraan Elektrik",
-    "rules": {}
+    "rules": {
+      "minMUET": 2,
+      "stpmAll": [
+        {
+          "type": "grade",
+          "subject": "Mathematics (T)",
+          "minPoint": 2.0
+        }
+      ],
+      "pathAlternatives": [
+        {
+          "stpmAll": [
+            {
+              "type": "grade",
+              "subject": "Physics",
+              "minPoint": 2.0
+            }
+          ]
+        },
+        {
+          "stpmAll": [
+            {
+              "type": "oneOf",
+              "subjects": [
+                "Chemistry",
+                "Biology"
+              ],
+              "minPoint": 2.0
+            }
+          ],
+          "spmAll": [
+            {
+              "type": "grade",
+              "subject": "Fizik",
+              "minRank": 2
+            }
+          ]
+        }
+      ]
+    },
+    "meritByCategory": {
+      "S": 93.0
+    },
+    "meritAudit": "Merit dirujuk daripada rekod e-Panduan UPUOnline 2026/2027 melalui MyUPU; semakan rasmi akhir melalui e-Panduan UPUOnline."
   },
   {
     "university": "Universiti Malaysia Perlis (UniMAP)",
@@ -10633,18 +10930,61 @@ const PROGRAMS = [
     "category": [
       "S"
     ],
-    "meritAverage": null,
+    "meritAverage": 87.37,
     "interview": false,
     "test": false,
-    "auditStatus": "in_audit",
-    "ruleSession": "UniMAP portal rasmi 2026 — rules STPM sedang diaudit",
-    "meritSession": "Belum dimasukkan",
-    "sourceLabel": "Program: UniMAP rasmi 2026 · Syarat STPM: dalam audit",
-    "notes": "Program disahkan wujud pada portal rasmi UniMAP 2026. Tidak dipaparkan dalam keputusan kelayakan sehingga syarat STPM terperinci disahkan.",
+    "auditStatus": "verified_current_program_official_stpm_rule",
+    "ruleSession": "UniMAP rasmi STPM 2024/2025; program aktif pada portal UniMAP 2026",
+    "meritSession": "e-Panduan UPUOnline 2026/2027 (rekod mirror MyUPU) · Kategori S",
+    "sourceLabel": "Program aktif: portal rasmi UniMAP 2026 · Syarat STPM: dokumen rasmi UniMAP · Merit: e-Panduan UPUOnline 2026/2027 apabila tersedia",
+    "notes": "Syarat STPM: Matematik T sekurang-kurangnya Gred C dan satu daripada Fizik/Kimia/Biologi sekurang-kurangnya Gred C; jika menggunakan Kimia atau Biologi, Fizik SPM perlu sekurang-kurangnya lulus Gred E; MUET sekurang-kurangnya Band 2. Syarat kesihatan/keupayaan kerja amali yang dinyatakan UniMAP perlu disemak secara manual. Merit Kategori S rujukan e-Panduan 2026/2027: 87.37%.",
     "code": "UR6524005",
     "name": "Sarjana Muda Teknologi Kejuruteraan Kimia (Proses Kimia Industri) dengan Kepujian",
     "field": "Teknologi Kejuruteraan Kimia",
-    "rules": {}
+    "rules": {
+      "minMUET": 2,
+      "stpmAll": [
+        {
+          "type": "grade",
+          "subject": "Mathematics (T)",
+          "minPoint": 2.0
+        }
+      ],
+      "pathAlternatives": [
+        {
+          "stpmAll": [
+            {
+              "type": "grade",
+              "subject": "Physics",
+              "minPoint": 2.0
+            }
+          ]
+        },
+        {
+          "stpmAll": [
+            {
+              "type": "oneOf",
+              "subjects": [
+                "Chemistry",
+                "Biology"
+              ],
+              "minPoint": 2.0
+            }
+          ],
+          "spmAll": [
+            {
+              "type": "grade",
+              "subject": "Fizik",
+              "minRank": 2
+            }
+          ]
+        }
+      ]
+    },
+    "meritByCategory": {
+      "S": 87.37
+    },
+    "meritAudit": "Merit dirujuk daripada rekod e-Panduan UPUOnline 2026/2027 melalui MyUPU; semakan rasmi akhir melalui e-Panduan UPUOnline."
   },
   {
     "university": "Universiti Malaysia Perlis (UniMAP)",
@@ -10726,10 +11066,10 @@ const PROGRAMS = [
     "interview": false,
     "test": false,
     "auditStatus": "in_audit",
-    "ruleSession": "UniMAP portal rasmi 2026 — rules STPM sedang diaudit",
-    "meritSession": "Belum dimasukkan",
-    "sourceLabel": "Program: UniMAP rasmi 2026 · Syarat STPM: dalam audit",
-    "notes": "Program disahkan wujud pada portal rasmi UniMAP 2026. Tidak dipaparkan dalam keputusan kelayakan sehingga syarat STPM terperinci disahkan.",
+    "ruleSession": "Portal rasmi UniMAP 2026 mengesahkan laluan STPM; syarat terperinci belum berjaya dipadankan dengan selamat",
+    "meritSession": "e-Panduan mirror 2026/2027 belum memaparkan merit Kategori S",
+    "sourceLabel": "Portal rasmi UniMAP menggunakan kod UR6481001; mirror e-Panduan/MyUPU memaparkan program sama sebagai UR6481002",
+    "notes": "Program aktif di UniMAP, tetapi terdapat percanggahan kod antara portal rasmi UniMAP (UR6481001) dan rekod mirror e-Panduan (UR6481002). Kekal tidak dipaparkan sehingga kod dan syarat STPM khusus dapat disahkan tanpa andaian.",
     "code": "UR6481001",
     "name": "Sarjana Muda Sains Data (Kecerdasan Buatan) dengan Kepujian",
     "field": "Sains Data & AI",
@@ -17074,7 +17414,6 @@ const PROGRAMS = [
     }
   }
 ];
-
 window.STPM_PROGRAMS = PROGRAMS;
 
   </script>
@@ -17260,7 +17599,7 @@ window.STPM_PROGRAMS = PROGRAMS;
       return staleStatuses.has(program.auditStatus)?'⚠️ Syarat bersumber sesi terdahulu — semak e-Panduan semasa':'';
     }
     function renderPrograms(programs, merit, category, ctx){
-      if(!programs.length) return `<div class="result warn"><h3>Tiada program dalam database semasa yang dapat disahkan layak</h3><p>Ini tidak bermaksud tiada program UPU langsung. Database STPMMatch v1.9 menggunakan program semakan yang tersedia; program audit tertangguh tidak dipaparkan.</p></div>`;
+      if(!programs.length) return `<div class="result warn"><h3>Tiada program dalam database semasa yang dapat disahkan layak</h3><p>Ini tidak bermaksud tiada program UPU langsung. Database STPMMatch v1.11 menggunakan program semakan yang tersedia.</p></div>`;
       const counts={green:0,blue:0,yellow:0,red:0,pending:0,confirmed:0,needsCheck:0};
       programs.forEach(p=>{
         const info=programMeritInfo(p,category); const avg=info.value; const ms=meritStatus(merit,avg);
@@ -17344,7 +17683,7 @@ window.STPM_PROGRAMS = PROGRAMS;
       if(spmBCount!=null && (spmBCount<0 || spmBCount>15)) inputIssues.push('jumlah subjek Gred B atau lebih baik tidak sah');
       if(spmCredits!=null && spmBCount!=null && spmBCount>spmCredits) inputIssues.push('jumlah subjek Gred B atau lebih baik tidak boleh melebihi jumlah kepujian SPM');
       if(inputIssues.length){result.innerHTML=`<div class="result warn"><h3>Semak semula input</h3><div class="tags">${inputIssues.map(x=>`<span class="tag">${x}</span>`).join('')}</div></div>`;return;}
-      if(!(window.STPM_PROGRAMS||[]).length){result.innerHTML=`<div class="result bad"><h3>Database program tidak dimuatkan</h3><p>Fail ini sepatutnya mengandungi database program secara terbina dalam. Sila gunakan versi STPMMatch v1.9 self-contained.</p></div>`;return;}
+      if(!(window.STPM_PROGRAMS||[]).length){result.innerHTML=`<div class="result bad"><h3>Database program tidak dimuatkan</h3><p>Fail ini sepatutnya mengandungi database program secara terbina dalam. Sila gunakan versi STPMMatch v1.11 self-contained.</p></div>`;return;}
       const cat=determineCategory(data.map(x=>x.subject)); const stpmBest={}; data.forEach(x=>{const pt=GRADE_POINTS[x.grade]??-1; const ruleSubject=toRuleSubject(x.subject); stpmBest[ruleSubject]=Math.max(stpmBest[ruleSubject]??-1,pt);}); const paPoint=stpmBest['Pengajian Am']??-1; const cOrBetter=Object.values(stpmBest).filter(pt=>pt>=2).length; const reasons=[];
       if(pngk<2) reasons.push('PNGK kurang daripada 2.00'); if(paPoint<2) reasons.push('Pengajian Am belum mencapai Gred C'); if(cOrBetter<3) reasons.push('Belum ada 3 mata pelajaran Gred C atau lebih baik termasuk Pengajian Am'); if((SPM_RANK[bm]??-1)<4) reasons.push('Bahasa Melayu SPM belum kepujian'); if((SPM_RANK[history]??-1)<2) reasons.push('Sejarah SPM belum lulus');
       const muetNum=muet==='5+'?5.5:parseFloat(muet); if(muetNum<1) reasons.push('MUET kurang Band 1.0');
@@ -17354,7 +17693,7 @@ window.STPM_PROGRAMS = PROGRAMS;
       const verified=(window.STPM_PROGRAMS||[]).filter(p=>p.auditStatus!=='in_audit'); const auditing=(window.STPM_PROGRAMS||[]).filter(p=>p.auditStatus==='in_audit');
       const ctx={category:cat.category,pngk,muet:muetNum,stpmMap,spmMap,spmCredits,spmBCount,tahfizStatus,uitmStatus};
       const eligible=verified.filter(p=>programEligible(p,ctx)).sort((a,b)=>{const am=programMerit(a,cat.category), bm=programMerit(b,cat.category); return (bm??-1)-(am??-1);});
-      result.innerHTML=`<div class="result ok"><h3>Tapisan asas lulus</h3><div class="stats"><div class="stat"><b>${cat.category}</b><span>Kategori STPM</span></div><div class="stat"><b>${academic.toFixed(2)}</b><span>Akademik / 90</span></div><div class="stat"><b>${merit.toFixed(2)}</b><span>Merit / 100</span></div></div><p><strong>${categoryExplanation(cat)}</strong></p><p>Database semasa: ${verified.length} program semakan + ${auditing.length} program audit tertangguh (tidak dipaparkan).</p></div>`+renderPrograms(eligible,merit,cat.category,ctx);
+      result.innerHTML=`<div class="result ok"><h3>Tapisan asas lulus</h3><div class="stats"><div class="stat"><b>${cat.category}</b><span>Kategori STPM</span></div><div class="stat"><b>${academic.toFixed(2)}</b><span>Akademik / 90</span></div><div class="stat"><b>${merit.toFixed(2)}</b><span>Merit / 100</span></div></div><p><strong>${categoryExplanation(cat)}</strong></p><p>Database semasa: ${verified.length} program semakan tersedia.</p></div>`+renderPrograms(eligible,merit,cat.category,ctx);
     }
 
     function renderExploreChips(){
