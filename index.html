@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>STPMMatch v1.8 — Semakan Kelayakan & Merit UPU</title>
+  <title>STPMMatch v1.9 — Semakan Kelayakan & Merit UPU</title>
   <meta name="description" content="STPMMatch membantu lepasan STPM menyemak kelayakan asas UPU, mengira merit dan meneroka laluan berdasarkan kombinasi subjek STPM." />
   <style>
     :root{
@@ -100,6 +100,20 @@
 
   
     .status-explain{display:block;margin-top:9px;font-size:12px;line-height:1.5;color:#607089;font-weight:600}
+  
+    /* v1.9 Teroka Laluan: program sebenar + senarai rasmi STPM 2026 */
+    .chip input:disabled+label{background:#e8f1fb;border-color:#9cb9db;color:#173f70;cursor:default;box-shadow:inset 0 0 0 1px rgba(22,59,104,.05)}
+    .explore-program-section{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+    .explore-program-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:12px}
+    .explore-program-head h3{margin:0 0 4px;font-size:18px}.explore-program-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .explore-count{white-space:nowrap;padding:6px 10px;border-radius:999px;background:#eaf2fb;color:#244b77;font-size:11px;font-weight:900}
+    .explore-program-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .explore-program-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;box-shadow:0 4px 14px rgba(28,50,78,.035)}
+    .explore-program-name{font-weight:900;font-size:14px;line-height:1.4;color:var(--ink)}
+    .explore-program-meta{margin-top:5px;color:#5c6d84;font-size:12px;line-height:1.45}
+    .explore-program-field{display:inline-block;margin-top:8px;padding:5px 8px;border-radius:999px;background:#f1f5f9;color:#46617d;font-size:11px;font-weight:800}
+    @media(max-width:760px){.explore-program-grid{grid-template-columns:1fr}.explore-program-head{display:block}.explore-count{display:inline-block;margin-top:8px}}
+
   </style>
 </head>
 <body>
@@ -186,6 +200,7 @@
       <div class="panel-body">
         <div class="step">
           <h3>Pilih mata pelajaran STPM anda</h3>
+          <p class="help">Senarai 23 mata pelajaran rasmi STPM yang dimurnikan mulai 2026 (MPM). Pengajian Am ditanda sebagai wajib.</p>
           <div id="exploreSubjects" class="subject-chips"></div>
           <div class="action-row"><button class="primary-btn" onclick="exploreRoutes()">Tunjukkan Laluan Saya</button></div>
           <div id="routeResult"></div>
@@ -17064,28 +17079,49 @@ window.STPM_PROGRAMS = PROGRAMS;
 
   </script>
   <script>
+    // Senarai rasmi mata pelajaran STPM yang dimurnikan mulai peperiksaan 2026 (MPM)
     const STPM_SUBJECTS = [
-      'Pengajian Am','Bahasa Melayu','Bahasa Cina','Bahasa Tamil','Bahasa Arab','Bahasa Arab Tinggi','Literature in English','Kesusasteraan Melayu Komunikatif','Syariah','Usuluddin','Sejarah','Geografi','Ekonomi','Pengajian Perniagaan','Perakaunan','Mathematics (M)','Mathematics (T)','Further Mathematics','Physics','Chemistry','Biology','Information and Communications Technology (ICT)','Sains Sukan','Seni Visual','Tahfiz Al-Quran'
+      'Pengajian Am','Bahasa Melayu','Bahasa Cina','Bahasa Tamil','Bahasa Arab','Literature in English','Kesusasteraan Melayu Komunikatif',
+      'Pengajian Syariah Kontemporari','Pengajian Usuluddin','Tahfiz Al-Quran','Sejarah','Geografi','Ekonomi','Pengajian Perniagaan','Perakaunan',
+      'Management Mathematics','Mathematics','Information and Communications Technology (ICT)','Physics','Chemistry','Biology','Sains Sukan','Seni Visual'
     ];
     const GRADES = ['A','A-','B+','B','B-','C+','C','C-','D+','D','F'];
     const GRADE_POINTS = {'A':4.00,'A-':3.67,'B+':3.33,'B':3.00,'B-':2.67,'C+':2.33,'C':2.00,'C-':1.67,'D+':1.33,'D':1.00,'F':0};
-    const SCIENCE_SET = new Set(['Mathematics (M)','Mathematics (T)','Physics','Chemistry','Biology','Information and Communications Technology (ICT)','Sains Sukan']);
+    const SCIENCE_SET = new Set(['Management Mathematics','Mathematics','Physics','Chemistry','Biology','Information and Communications Technology (ICT)','Sains Sukan']);
+
+    // Database syarat program dibina daripada beberapa sesi yang masih menggunakan nama mata pelajaran lama.
+    // Pemetaan ini membolehkan paparan menggunakan nama rasmi STPM 2026 tanpa memecahkan rule sedia ada.
+    const STPM_RULE_ALIASES = {
+      'Pengajian Syariah Kontemporari':'Syariah',
+      'Pengajian Usuluddin':'Usuluddin',
+      'Management Mathematics':'Mathematics (M)',
+      'Mathematics':'Mathematics (T)'
+    };
+    const STPM_DISPLAY_ALIASES = {
+      'Syariah':'Pengajian Syariah Kontemporari',
+      'Usuluddin':'Pengajian Usuluddin',
+      'Mathematics (M)':'Management Mathematics',
+      'Mathematics (T)':'Mathematics'
+    };
+    function toRuleSubject(subject){ return STPM_RULE_ALIASES[subject] || subject; }
+    function toDisplaySubject(subject){ return STPM_DISPLAY_ALIASES[subject] || subject; }
+
     const SPM_SUBJECTS = ['Bahasa Inggeris','Literature in English','Bahasa Cina','Bahasa Arab','Bahasa Arab Tinggi','Bahasa Arab Komunikasi','Al-Lughah Al-Arabiah Al-Mu\'asirah','Turath Bahasa Arab','Al-Adab Wa Al-Balaghah','Bahasa Melayu','Sejarah','Pendidikan Moral','Pendidikan Islam','Tasawwur Islam','Pendidikan Syariah Islamiah','Hifz Al-Quran','Usul Al-Din','Pendidikan Al-Quran dan Al-Sunnah','Maharat Al-Quran','Al-Syariah','Manahij Al-Ulum Al-Islamiah','Turath Al-Dirasat Al-Islamiah','Turath Al-Quran Wa Al-Sunnah','Kesusasteraan Melayu','Matematik','Matematik Tambahan','Ekonomi','Ekonomi Asas','Pengajian Keusahawanan','Perniagaan','Prinsip Perakaunan','Information and Communication Technology (ICT)','Information and Communications Technology (ICT)','Sains Sukan','Seni Visual','Geografi','Perdagangan','Fizik','Kimia','Biologi','Sains','Sains Tambahan','Sains Gunaan','Sains Rumah Tangga','Pertanian','Sains Komputer','Produksi Multimedia','Grafik Berkomputer','Fundamentals of Programming','Programming and Development Tools','Pengajian Kejuruteraan Mekanikal','Pengajian Kejuruteraan Awam','Pengajian Kejuruteraan Elektrik dan Elektronik','Asas Kelestarian','Grafik Komunikasi Teknikal','Lukisan Kejuruteraan','Reka Cipta','Subjek lain'];
     const SPM_GRADES=['A+','A','A-','B+','B','C+','C','D','E','G'];
     const SPM_RANK={'A+':10,'A':9,'A-':8,'B+':7,'B':6,'C+':5,'C':4,'D':3,'E':2,'G':0};
 
     const ROUTES = [
-      {name:'Perubatan, Kesihatan & Sains Hayat', icon:'🧬', needsAny:['Biology','Chemistry'], bonus:['Biology','Chemistry'], text:'Bidang berkaitan biologi, kesihatan, bioperubatan dan sains hayat. Program profesional biasanya mempunyai syarat gred/MUET yang lebih tinggi.'},
-      {name:'Kejuruteraan & Teknologi', icon:'⚙️', needsAny:['Physics','Mathematics (T)','Chemistry'], bonus:['Physics','Mathematics (T)'], text:'Laluan ke kejuruteraan dan teknologi. Kombinasi Matematik T + Fizik biasanya paling relevan untuk diterokai.'},
-      {name:'Komputer, Data & Teknologi Digital', icon:'💻', needsAny:['Information and Communications Technology (ICT)','Mathematics (M)','Mathematics (T)'], bonus:['Information and Communications Technology (ICT)','Mathematics (T)'], text:'Sains komputer, sistem maklumat, data, statistik dan bidang digital bergantung pada syarat program.'},
-      {name:'Sains Tulen & Sains Gunaan', icon:'🔬', needsAny:['Physics','Chemistry','Biology','Mathematics (T)','Mathematics (M)'], bonus:['Physics','Chemistry','Biology'], text:'Fizik, kimia, biologi, matematik dan pelbagai cabang sains gunaan.'},
-      {name:'Sukan & Sains Sukan', icon:'🏃', needsAny:['Sains Sukan','Biology'], bonus:['Sains Sukan'], text:'Sains sukan, pengurusan sukan, pendidikan jasmani dan bidang berkaitan tertakluk syarat program.'},
-      {name:'Ekonomi, Perniagaan & Pengurusan', icon:'📊', needsAny:['Ekonomi','Pengajian Perniagaan','Perakaunan','Mathematics (M)'], bonus:['Ekonomi','Perakaunan'], text:'Ekonomi, pengurusan, perniagaan, kewangan dan bidang berkaitan.'},
-      {name:'Perakaunan & Kewangan', icon:'🧾', needsAny:['Perakaunan','Ekonomi','Mathematics (M)'], bonus:['Perakaunan'], text:'Laluan perakaunan dan kewangan; semakan gred Matematik/SPM dan syarat khusus masih diperlukan.'},
-      {name:'Sains Sosial, Kemanusiaan & Dasar', icon:'🌏', needsAny:['Sejarah','Geografi','Ekonomi','Pengajian Am'], bonus:['Sejarah','Geografi','Ekonomi'], text:'Sains sosial, pentadbiran, dasar, hubungan antarabangsa, pembangunan, geografi dan kemanusiaan.'},
-      {name:'Bahasa, Komunikasi & Pendidikan', icon:'🗣️', needsAny:['Bahasa Melayu','Bahasa Cina','Bahasa Tamil','Bahasa Arab','Bahasa Arab Tinggi','Literature in English','Kesusasteraan Melayu Komunikatif'], bonus:['Bahasa Melayu','Literature in English','Kesusasteraan Melayu Komunikatif'], text:'Bahasa, linguistik, komunikasi dan pendidikan. Program pendidikan mungkin memerlukan i-MEdSI, ujian atau temu duga.'},
-      {name:'Seni & Kreatif', icon:'🎨', needsAny:['Seni Visual','Kesusasteraan Melayu Komunikatif','Literature in English'], bonus:['Seni Visual'], text:'Seni visual, reka bentuk, seni persembahan dan bidang kreatif, bergantung pada portfolio/temu duga jika ditetapkan.'},
-      {name:'Pengajian Islam', icon:'📚', needsAny:['Syariah','Usuluddin','Bahasa Arab'], bonus:['Syariah','Usuluddin','Bahasa Arab'], text:'Pengajian Islam, Syariah, Usuluddin, bahasa Arab dan bidang berkaitan.'}
+      {name:'Perubatan, Kesihatan & Sains Hayat', icon:'🧬', needsAny:['Biology','Chemistry'], bonus:['Biology','Chemistry'], keywords:['perubatan','kesihatan','biologi','bioperubatan','pemakanan','dietetik','farmasi','sains hayat','fisioterapi','kejururawatan'], text:'Bidang berkaitan biologi, kesihatan, bioperubatan dan sains hayat. Program profesional biasanya mempunyai syarat gred/MUET yang lebih tinggi.'},
+      {name:'Kejuruteraan & Teknologi', icon:'⚙️', needsAny:['Physics','Mathematics','Chemistry'], bonus:['Physics','Mathematics'], keywords:['kejuruteraan','teknologi kejuruteraan','mekanikal','elektrik','elektronik','awam','kimia','pembuatan','aeroangkasa','mekatronik'], text:'Laluan ke kejuruteraan dan teknologi. Kombinasi Mathematics + Physics biasanya paling relevan untuk diterokai.'},
+      {name:'Komputer, Data & Teknologi Digital', icon:'💻', needsAny:['Information and Communications Technology (ICT)','Management Mathematics','Mathematics'], bonus:['Information and Communications Technology (ICT)','Mathematics'], keywords:['komputer','perisian','teknologi maklumat','data','statistik','multimedia','digital','sistem maklumat','keselamatan siber','kecerdasan buatan'], text:'Sains komputer, sistem maklumat, data, statistik dan bidang digital bergantung pada syarat program.'},
+      {name:'Sains Tulen & Sains Gunaan', icon:'🔬', needsAny:['Physics','Chemistry','Biology','Mathematics','Management Mathematics'], bonus:['Physics','Chemistry','Biology'], keywords:['fizik','kimia','biologi','matematik','statistik','sains gunaan','sains bahan','sains tulen','instrumentasi'], text:'Fizik, kimia, biologi, matematik dan pelbagai cabang sains gunaan.'},
+      {name:'Sukan & Sains Sukan', icon:'🏃', needsAny:['Sains Sukan','Biology'], bonus:['Sains Sukan'], keywords:['sukan','pendidikan jasmani','rekreasi','kejurulatihan'], text:'Sains sukan, pengurusan sukan, pendidikan jasmani dan bidang berkaitan tertakluk syarat program.'},
+      {name:'Ekonomi, Perniagaan & Pengurusan', icon:'📊', needsAny:['Ekonomi','Pengajian Perniagaan','Perakaunan','Management Mathematics'], bonus:['Ekonomi','Perakaunan'], keywords:['ekonomi','perniagaan','pengurusan','pemasaran','keusahawanan','sumber manusia','logistik','pelancongan','hospitaliti','pentadbiran perniagaan'], text:'Ekonomi, pengurusan, perniagaan, kewangan dan bidang berkaitan.'},
+      {name:'Perakaunan & Kewangan', icon:'🧾', needsAny:['Perakaunan','Ekonomi','Management Mathematics'], bonus:['Perakaunan'], keywords:['perakaunan','kewangan','perbankan','muamalat','insurans','risiko'], text:'Laluan perakaunan dan kewangan; semakan gred Matematik/SPM dan syarat khusus masih diperlukan.'},
+      {name:'Sains Sosial, Kemanusiaan & Dasar', icon:'🌏', needsAny:['Sejarah','Geografi','Ekonomi'], bonus:['Sejarah','Geografi','Ekonomi'], keywords:['sains sosial','sejarah','geografi','dasar','pentadbiran','hubungan antarabangsa','pembangunan','kriminologi','sosiologi','antropologi','kerja sosial','politik'], text:'Sains sosial, pentadbiran, dasar, hubungan antarabangsa, pembangunan, geografi dan kemanusiaan.'},
+      {name:'Bahasa, Komunikasi & Pendidikan', icon:'🗣️', needsAny:['Bahasa Melayu','Bahasa Cina','Bahasa Tamil','Bahasa Arab','Literature in English','Kesusasteraan Melayu Komunikatif'], bonus:['Bahasa Melayu','Literature in English','Kesusasteraan Melayu Komunikatif'], keywords:['bahasa','linguistik','komunikasi','media','pendidikan','sastera','tesl'], text:'Bahasa, linguistik, komunikasi dan pendidikan. Program pendidikan mungkin memerlukan i-MEdSI, ujian atau temu duga.'},
+      {name:'Seni & Kreatif', icon:'🎨', needsAny:['Seni Visual','Kesusasteraan Melayu Komunikatif','Literature in English'], bonus:['Seni Visual'], keywords:['seni','reka bentuk','kreatif','multimedia','persembahan','budaya','persuratan'], text:'Seni visual, reka bentuk, seni persembahan dan bidang kreatif, bergantung pada portfolio/temu duga jika ditetapkan.'},
+      {name:'Pengajian Islam', icon:'📚', needsAny:['Pengajian Syariah Kontemporari','Pengajian Usuluddin','Bahasa Arab','Tahfiz Al-Quran'], bonus:['Pengajian Syariah Kontemporari','Pengajian Usuluddin','Bahasa Arab','Tahfiz Al-Quran'], keywords:['pengajian islam','syariah','usuluddin','islam','dakwah','al-quran','al-sunnah','bahasa arab','muamalat'], text:'Pengajian Islam, Syariah, Usuluddin, Tahfiz, bahasa Arab dan bidang berkaitan.'}
     ];
 
     function openPanel(id){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
@@ -17224,7 +17260,7 @@ window.STPM_PROGRAMS = PROGRAMS;
       return staleStatuses.has(program.auditStatus)?'⚠️ Syarat bersumber sesi terdahulu — semak e-Panduan semasa':'';
     }
     function renderPrograms(programs, merit, category, ctx){
-      if(!programs.length) return `<div class="result warn"><h3>Tiada program dalam database semasa yang dapat disahkan layak</h3><p>Ini tidak bermaksud tiada program UPU langsung. Database STPMMatch v1.8 menggunakan program semakan yang tersedia; program audit tertangguh tidak dipaparkan.</p></div>`;
+      if(!programs.length) return `<div class="result warn"><h3>Tiada program dalam database semasa yang dapat disahkan layak</h3><p>Ini tidak bermaksud tiada program UPU langsung. Database STPMMatch v1.9 menggunakan program semakan yang tersedia; program audit tertangguh tidak dipaparkan.</p></div>`;
       const counts={green:0,blue:0,yellow:0,red:0,pending:0,confirmed:0,needsCheck:0};
       programs.forEach(p=>{
         const info=programMeritInfo(p,category); const avg=info.value; const ms=meritStatus(merit,avg);
@@ -17308,8 +17344,8 @@ window.STPM_PROGRAMS = PROGRAMS;
       if(spmBCount!=null && (spmBCount<0 || spmBCount>15)) inputIssues.push('jumlah subjek Gred B atau lebih baik tidak sah');
       if(spmCredits!=null && spmBCount!=null && spmBCount>spmCredits) inputIssues.push('jumlah subjek Gred B atau lebih baik tidak boleh melebihi jumlah kepujian SPM');
       if(inputIssues.length){result.innerHTML=`<div class="result warn"><h3>Semak semula input</h3><div class="tags">${inputIssues.map(x=>`<span class="tag">${x}</span>`).join('')}</div></div>`;return;}
-      if(!(window.STPM_PROGRAMS||[]).length){result.innerHTML=`<div class="result bad"><h3>Database program tidak dimuatkan</h3><p>Fail ini sepatutnya mengandungi database program secara terbina dalam. Sila gunakan versi STPMMatch v1.8 self-contained.</p></div>`;return;}
-      const cat=determineCategory(data.map(x=>x.subject)); const stpmBest={}; data.forEach(x=>{const pt=GRADE_POINTS[x.grade]??-1; stpmBest[x.subject]=Math.max(stpmBest[x.subject]??-1,pt);}); const paPoint=stpmBest['Pengajian Am']??-1; const cOrBetter=Object.values(stpmBest).filter(pt=>pt>=2).length; const reasons=[];
+      if(!(window.STPM_PROGRAMS||[]).length){result.innerHTML=`<div class="result bad"><h3>Database program tidak dimuatkan</h3><p>Fail ini sepatutnya mengandungi database program secara terbina dalam. Sila gunakan versi STPMMatch v1.9 self-contained.</p></div>`;return;}
+      const cat=determineCategory(data.map(x=>x.subject)); const stpmBest={}; data.forEach(x=>{const pt=GRADE_POINTS[x.grade]??-1; const ruleSubject=toRuleSubject(x.subject); stpmBest[ruleSubject]=Math.max(stpmBest[ruleSubject]??-1,pt);}); const paPoint=stpmBest['Pengajian Am']??-1; const cOrBetter=Object.values(stpmBest).filter(pt=>pt>=2).length; const reasons=[];
       if(pngk<2) reasons.push('PNGK kurang daripada 2.00'); if(paPoint<2) reasons.push('Pengajian Am belum mencapai Gred C'); if(cOrBetter<3) reasons.push('Belum ada 3 mata pelajaran Gred C atau lebih baik termasuk Pengajian Am'); if((SPM_RANK[bm]??-1)<4) reasons.push('Bahasa Melayu SPM belum kepujian'); if((SPM_RANK[history]??-1)<2) reasons.push('Sejarah SPM belum lulus');
       const muetNum=muet==='5+'?5.5:parseFloat(muet); if(muetNum<1) reasons.push('MUET kurang Band 1.0');
       const academic=(pngk/4)*90, merit=Math.min(100,academic+koko);
@@ -17323,21 +17359,80 @@ window.STPM_PROGRAMS = PROGRAMS;
 
     function renderExploreChips(){
       const box=document.getElementById('exploreSubjects');
-      box.innerHTML=STPM_SUBJECTS.filter(s=>s!=='Pengajian Am').map((s,i)=>`<span class="chip"><input type="checkbox" id="sub_${i}" value="${s}"><label for="sub_${i}">${s}</label></span>`).join('');
+      box.innerHTML=STPM_SUBJECTS.map((s,i)=>{
+        const isPA=s==='Pengajian Am';
+        return `<span class="chip"><input type="checkbox" id="sub_${i}" value="${s}" ${isPA?'checked disabled':''}><label for="sub_${i}">${s}${isPA?' · wajib':''}</label></span>`;
+      }).join('');
+    }
+    function exploreConditionPossible(cond,chosenRule){
+      if(cond.type==='grade') return chosenRule.has(cond.subject);
+      if(cond.type==='oneOf') return (cond.subjects||[]).some(x=>chosenRule.has(x));
+      if(cond.type==='count' || cond.type==='countFrom') return (cond.subjects||[]).filter(x=>chosenRule.has(x)).length>=(cond.count||0);
+      if(cond.type==='countExcluding') return [...chosenRule].filter(x=>!(cond.exclude||[]).includes(x)).length>=(cond.count||0);
+      return true;
+    }
+    function programPossibleFromSubjects(program,chosenDisplay,category){
+      if(!(program.category||[]).includes(category)) return false;
+      const chosenRule=new Set(chosenDisplay.map(toRuleSubject));
+      const r={...(program.rules||{}), ...(((program.rulesByCategory||{})[category])||{})};
+      if(!(r.stpmAll||[]).every(c=>exploreConditionPossible(c,chosenRule))) return false;
+      if((r.stpmAlternatives||[]).length && !r.stpmAlternatives.some(alt=>alt.every(c=>exploreConditionPossible(c,chosenRule)))) return false;
+      if((r.crossAlternatives||[]).length){
+        const impossible=(r.crossAlternatives||[]).some(group=>{
+          // SPM belum dimasukkan dalam mod Teroka, jadi kumpulan yang mempunyai pilihan SPM tidak digunakan untuk menolak program.
+          if(group.some(item=>item.level==='spm')) return false;
+          return !group.some(item=>item.level==='stpm' && exploreConditionPossible(item.condition,chosenRule));
+        });
+        if(impossible) return false;
+      }
+      if((r.pathAlternatives||[]).length){
+        const possiblePath=r.pathAlternatives.some(path=>(path.stpmAll||[]).every(c=>exploreConditionPossible(c,chosenRule)));
+        if(!possiblePath) return false;
+      }
+      return true;
+    }
+    function routeProgramScore(program,topRoutes,chosenDisplay){
+      const hay=`${program.name||''} ${program.field||''}`.toLowerCase();
+      let score=0;
+      topRoutes.forEach((route,idx)=>{
+        const weight=Math.max(1,6-idx);
+        (route.keywords||[]).forEach(k=>{if(hay.includes(k.toLowerCase())) score+=weight;});
+      });
+      const rules={...(program.rules||{})};
+      const chosenRule=new Set(chosenDisplay.map(toRuleSubject));
+      const ruleText=JSON.stringify(rules);
+      chosenRule.forEach(s=>{if(s!=='Pengajian Am' && ruleText.includes(`\"${s}\"`)) score+=1.5;});
+      if(programMeritInfo(program, determineCategory(chosenDisplay).category).value!=null) score+=0.15;
+      return score;
+    }
+    function exploreProgramCards(programs){
+      if(!programs.length) return `<div class="notice"><strong>Belum ada program khusus dipaparkan.</strong> Kombinasi subjek ini masih boleh mempunyai pilihan lain. Gunakan Semak Kelayakan Penuh apabila keputusan lengkap tersedia.</div>`;
+      return `<div class="explore-program-grid">${programs.map(p=>`<div class="explore-program-card"><div class="explore-program-name">${p.name}</div><div class="explore-program-meta">${p.university} · ${p.code}</div><div class="explore-program-field">${p.field||'Bidang program'}</div></div>`).join('')}</div>`;
+    }
+    function openEligibilityFromExplore(){
+      const chosen=[...document.querySelectorAll('#exploreSubjects input:checked')].map(x=>x.value);
+      openPanel('checkPanel');
+      const box=document.getElementById('subjectRows');
+      box.innerHTML='';
+      const ordered=['Pengajian Am',...chosen.filter(x=>x!=='Pengajian Am')];
+      [...new Set(ordered)].forEach(s=>addSubjectRow(s,''));
     }
     function exploreRoutes(){
       const chosen=[...document.querySelectorAll('#exploreSubjects input:checked')].map(x=>x.value);
+      const nonPA=chosen.filter(x=>x!=='Pengajian Am');
       const out=document.getElementById('routeResult');
-      if(!chosen.length){out.innerHTML='<div class="result warn"><h3>Pilih mata pelajaran dahulu</h3><p>Pilih sekurang-kurangnya satu mata pelajaran STPM.</p></div>';return;}
+      if(!nonPA.length){out.innerHTML='<div class="result warn"><h3>Pilih mata pelajaran dahulu</h3><p>Pengajian Am telah ditanda sebagai mata pelajaran wajib. Pilih sekurang-kurangnya satu lagi mata pelajaran STPM.</p></div>';return;}
       const cat=determineCategory(chosen);
       const scored=ROUTES.map(r=>{
-        const matches=r.needsAny.filter(x=>chosen.includes(x)).length;
-        const bonus=r.bonus.filter(x=>chosen.includes(x)).length;
+        const matches=r.needsAny.filter(x=>nonPA.includes(x)).length;
+        const bonus=r.bonus.filter(x=>nonPA.includes(x)).length;
         return {...r,score:matches+bonus*1.5};
       }).filter(r=>r.score>0).sort((a,b)=>b.score-a.score);
-      const generic={name:'Bidang Umum & Rentas Disiplin',icon:'🧭',text:'Sebahagian program mempunyai syarat yang terbuka kepada pelbagai kombinasi STPM. Semakan program khusus diperlukan untuk pengesahan.'};
+      const generic={name:'Bidang Umum & Rentas Disiplin',icon:'🧭',keywords:[],text:'Sebahagian program mempunyai syarat yang terbuka kepada pelbagai kombinasi STPM. Semakan program khusus diperlukan untuk pengesahan.'};
       const top=scored.length?scored.slice(0,8):[generic];
-      out.innerHTML=`<div class="result ok"><h3>Kategori anda: ${cat.category==='S'?'S — Aliran Sains':'A — Aliran Sastera'}</h3><p>Berdasarkan kombinasi subjek, inilah kelompok laluan yang paling relevan untuk diterokai dahulu.</p><div class="route-grid">${top.map(r=>`<div class="route"><h4>${r.icon} ${r.name}</h4><p>${r.text}</p></div>`).join('')}</div><div class="notice"><strong>Penting:</strong> “Teroka Laluan” bukan pengesahan kelayakan. Program sebenar boleh mensyaratkan gred tertentu, MUET, mata pelajaran SPM, temu duga atau ujian. Gunakan “Semak Kelayakan Saya” selepas keputusan lengkap dimasukkan.</div></div>`;
+      const verified=(window.STPM_PROGRAMS||[]).filter(p=>p.auditStatus!=='in_audit');
+      const candidates=verified.filter(p=>programPossibleFromSubjects(p,chosen,cat.category)).map(p=>({p,score:routeProgramScore(p,top,chosen)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score || (a.p.university||'').localeCompare(b.p.university||'')).slice(0,12).map(x=>x.p);
+      out.innerHTML=`<div class="result ok"><h3>Kategori anda: ${cat.category==='S'?'S — Aliran Sains':'A — Aliran Sastera'}</h3><p>Berdasarkan kombinasi subjek, inilah kelompok laluan yang paling relevan untuk diterokai dahulu.</p><div class="route-grid">${top.map(r=>`<div class="route"><h4>${r.icon} ${r.name}</h4><p>${r.text}</p></div>`).join('')}</div><div class="explore-program-section"><div class="explore-program-head"><div><h3>Program yang boleh diteroka</h3><p>Contoh program daripada database STPMMatch yang sepadan dengan kategori dan kombinasi mata pelajaran anda.</p></div><span class="explore-count">${candidates.length} contoh</span></div>${exploreProgramCards(candidates)}</div><div class="notice"><strong>Penting:</strong> Senarai ini ialah penerokaan berdasarkan kombinasi mata pelajaran sahaja. Ia <strong>bukan pengesahan kelayakan</strong> kerana gred STPM, PNGK, MUET, keputusan SPM, temu duga dan syarat khas belum diambil kira.</div><div class="action-row"><button class="primary-btn" onclick="openEligibilityFromExplore()">Masukkan Gred & Semak Kelayakan Penuh</button></div></div>`;
     }
 
     addSubjectRow('Pengajian Am',''); addSubjectRow(); addSubjectRow(); addSubjectRow(); addSpmRow(); addSpmRow(); renderExploreChips();
