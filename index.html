@@ -114,6 +114,176 @@
     .explore-program-field{display:inline-block;margin-top:8px;padding:5px 8px;border-radius:999px;background:#f1f5f9;color:#46617d;font-size:11px;font-weight:800}
     @media(max-width:760px){.explore-program-grid{grid-template-columns:1fr}.explore-program-head{display:block}.explore-count{display:inline-block;margin-top:8px}}
 
+  
+
+    /* v1.50 cosmetic emphasis only - no logic/engine changes */
+    #eligibilityResult .result.ok{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(180deg,#f9fdfb 0%,#f1faf6 100%);
+      border-color:#b9dfcb;
+      box-shadow:0 14px 34px rgba(18,98,70,.10);
+      padding:24px;
+    }
+    #eligibilityResult .result.ok:before{
+      content:"";
+      position:absolute;
+      left:0;top:0;bottom:0;
+      width:6px;
+      background:linear-gradient(180deg,#0f8a72,#22588f);
+    }
+    #eligibilityResult .result.ok > h3{
+      font-size:22px;
+      line-height:1.25;
+      color:#123f35;
+      letter-spacing:-.01em;
+      margin-bottom:10px;
+    }
+    #eligibilityResult .result.ok > p{
+      color:#42586b;
+    }
+
+    #eligibilityResult .stats{
+      gap:12px;
+      margin:18px 0;
+    }
+    #eligibilityResult .stats .stat{
+      min-height:88px;
+      padding:16px 17px;
+      border-width:1px;
+      box-shadow:0 6px 16px rgba(27,50,79,.055);
+    }
+    #eligibilityResult .stats .stat b{
+      font-size:25px;
+      line-height:1;
+      margin-bottom:8px;
+    }
+    #eligibilityResult .stats .stat span{
+      font-size:12px;
+      font-weight:700;
+      color:#5b6c82;
+    }
+    #eligibilityResult .stats .stat:nth-child(1){background:#f2f7ff;border-color:#c8d9ef}
+    #eligibilityResult .stats .stat:nth-child(1) b{color:#1f568e}
+    #eligibilityResult .stats .stat:nth-child(2){background:#effaf5;border-color:#bfe3d0}
+    #eligibilityResult .stats .stat:nth-child(2) b{color:#167d4a}
+    #eligibilityResult .stats .stat:nth-child(3){background:#fff8e9;border-color:#efd7a7}
+    #eligibilityResult .stats .stat:nth-child(3) b{color:#9a6500}
+    #eligibilityResult .stats .stat:nth-child(4){background:#eef8f7;border-color:#c4e1dd}
+    #eligibilityResult .stats .stat:nth-child(4) b{color:#0f7565}
+
+    #eligibilityResult .program-list{
+      gap:18px;
+      margin-top:20px;
+    }
+    #eligibilityResult .program-card{
+      position:relative;
+      border:1px solid #d9e3ee;
+      border-left:6px solid #b8c7da;
+      border-radius:18px;
+      padding:24px 24px 22px;
+      box-shadow:0 9px 24px rgba(20,44,73,.065);
+      transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+    }
+    #eligibilityResult .program-card:hover{
+      transform:translateY(-1px);
+      box-shadow:0 13px 30px rgba(20,44,73,.095);
+    }
+    #eligibilityResult .program-card:has(.status-good){border-left-color:#2e9b61}
+    #eligibilityResult .program-card:has(.status-mid){border-left-color:#3a72bd}
+    #eligibilityResult .program-card:has(.status-warn){border-left-color:#d59b27}
+    #eligibilityResult .program-card:has(.status-risk){border-left-color:#d05a55}
+    #eligibilityResult .program-card:has(.status-pending){border-left-color:#a6884b}
+    #eligibilityResult .program-card h4{
+      font-size:18px;
+      line-height:1.35;
+      color:#102b49;
+      margin-bottom:5px;
+    }
+    #eligibilityResult .program-meta{
+      color:#62758c;
+      font-size:13px;
+    }
+
+    #eligibilityResult .metric-grid{
+      gap:14px;
+      margin-top:17px;
+    }
+    #eligibilityResult .metric-card{
+      min-height:118px;
+      padding:15px 16px;
+      border-radius:15px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+    }
+    #eligibilityResult .metric-card:nth-child(1){
+      background:#f1f7ff;
+      border-color:#cbdcf0;
+    }
+    #eligibilityResult .metric-card:nth-child(2){
+      background:#f7f3ff;
+      border-color:#ddd0f2;
+    }
+    #eligibilityResult .metric-card:nth-child(3){
+      background:#f8fafc;
+      border-color:#d9e3ee;
+    }
+    #eligibilityResult .metric-card:has(.status-good){background:#effaf4;border-color:#b9dfca}
+    #eligibilityResult .metric-card:has(.status-mid){background:#f0f6ff;border-color:#c3d7f2}
+    #eligibilityResult .metric-card:has(.status-warn){background:#fff9ec;border-color:#ecd6a7}
+    #eligibilityResult .metric-card:has(.status-risk){background:#fff4f3;border-color:#efc8c5}
+    #eligibilityResult .metric-card:has(.status-pending){background:#faf7f0;border-color:#e4d8bd}
+    #eligibilityResult .metric-label{
+      color:#61748c;
+      font-size:11px;
+      letter-spacing:.045em;
+    }
+    #eligibilityResult .metric-value{
+      font-size:19px;
+      color:#102b49;
+    }
+    #eligibilityResult .status-chip{
+      padding:8px 12px;
+      border:1px solid rgba(0,0,0,.04);
+      box-shadow:0 3px 9px rgba(25,48,78,.06);
+    }
+    #eligibilityResult .status-good{background:#dcf4e7;color:#12623a}
+    #eligibilityResult .status-mid{background:#e5efff;color:#174f93}
+    #eligibilityResult .status-warn{background:#fff0c7;color:#855c00}
+    #eligibilityResult .status-risk{background:#ffe5e2;color:#a33331}
+    #eligibilityResult .status-pending{background:#f2ead8;color:#735711}
+    #eligibilityResult .status-explain{
+      color:#52677f;
+      margin-top:10px;
+    }
+    #eligibilityResult .mini-tags{
+      margin-top:14px;
+    }
+    #eligibilityResult .mini-tag{
+      background:#edf3f9;
+      border:1px solid #e0e8f1;
+    }
+    #eligibilityResult .notes-panel{
+      background:#f7fafc;
+      border-color:#dfe8f1;
+    }
+    #eligibilityResult .check-panel{
+      background:#fff7e5;
+      border-color:#ecd7a4;
+    }
+    #eligibilityResult .source-details{
+      margin-top:16px;
+      padding-top:14px;
+    }
+    #eligibilityResult .source-details summary{
+      color:#405b78;
+    }
+
+    @media(max-width:760px){
+      #eligibilityResult .result.ok{padding:20px}
+      #eligibilityResult .program-card{padding:20px 18px;border-left-width:5px}
+      #eligibilityResult .metric-card{min-height:auto}
+    }
+
   </style>
 </head>
 <body>
